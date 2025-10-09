@@ -38,7 +38,7 @@ const Contact = () => {
 
           {/* Contact Form */}
 <motion.form
-  action="https://formspree.io/f/your_unique_id" 
+  action="https://formspree.io/f/xkgqvlgv" 
   method="POST"
   initial={{ opacity: 0, x: 50 }}
   whileInView={{ opacity: 1, x: 0 }}
