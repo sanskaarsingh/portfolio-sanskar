@@ -22,7 +22,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="mb-4 text-5xl font-bold tracking-tight md:text-7xl"
+          className="mb-4 text-4xl font-bold tracking-tight md:text-7xl"
         >
           Sanskar Singh
         </motion.h1>
@@ -30,7 +30,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          className="text-lg font-light md:text-2xl text-light/80"
+          className="text-base font-light md:text-2xl text-light/80"
         >
           Full Stack Developer | Data Analyst | Backend & Data Systems
         </motion.p>
