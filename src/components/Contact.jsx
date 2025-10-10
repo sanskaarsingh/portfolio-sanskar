@@ -5,7 +5,7 @@ import { FiMail, FiPhone, FiGithub } from 'react-icons/fi';
 
 const Contact = () => {
   return (
-    <section id="projects" className="py-24">
+    <section id="contact" className="py-24">
       <div className="container px-6 mx-auto">
         <SectionHeader title="Let's Build Something Amazing" />
         <div className="flex flex-col max-w-4xl gap-12 mx-auto md:flex-row">
