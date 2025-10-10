@@ -1,4 +1,4 @@
-// in src/components/Projects.jsx
+
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -25,7 +25,7 @@ const Projects = () => {
               className="overflow-hidden transition-shadow duration-300 border rounded-lg shadow-md cursor-pointer bg-light dark:bg-dark border-dark/10 dark:border-light/10 hover:shadow-primary/20 hover:shadow-lg"
               onClick={() => setExpandedIndex(index === expandedIndex ? null : index)}
             >
-              {/* THIS IS THE PART THAT ADDS THE IMAGE */}
+            
               <img src={project.image} alt={project.title} className="object-cover w-full h-48" />
               
               <div className="p-6">

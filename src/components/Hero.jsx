@@ -1,19 +1,19 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import heroBgImage from '../assets/hero-bg.jpg'; // <-- Import your image here!
+import heroBgImage from '../assets/hero-bg.jpg';
 
 const Hero = () => {
   return (
     <section id="home" className="relative flex items-center justify-center h-screen overflow-hidden">
-      {/* Background Image and Overlay */}
+      
       <div className="absolute inset-0 z-0">
-        {/* The background image */}
+        
         <img 
           src={heroBgImage} 
           alt="Hero Background" 
-          className="object-cover w-full h-full opacity-30" // Adjust opacity here (e.g., opacity-20 to opacity-80)
+          className="object-cover w-full h-full opacity-30" 
         />
-        {/* Semi-transparent dark overlay to add tint and improve text readability */}
+        \
         <div className="absolute inset-0 bg-dark/30 dark:bg-dark/30" /> 
       </div>
 

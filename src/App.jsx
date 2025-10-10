@@ -22,7 +22,7 @@ function App() {
     }
   }, [theme]);
 
-  // Smooth Scrolling with Lenis
+
   useEffect(() => {
     const lenis = new Lenis();
 
