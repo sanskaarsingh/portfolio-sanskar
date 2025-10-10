@@ -14,7 +14,7 @@ module.exports = {
         purple: '#8b5cf6',
       },
       fontFamily: {
-        sans: ['"Inter"', 'sans-serif'],
+        sans: ['"Inter"', 'sans-serif'],'montserrat-black': ['"Montserrat"', 'sans-serif'],
       },
       animation: {
         'gradient-bg': 'gradient-bg 15s ease infinite',

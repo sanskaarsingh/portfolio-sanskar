@@ -1,22 +1,22 @@
+
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CgMenuRight, CgClose } from 'react-icons/cg';
+
+import { CgMenuRight, CgClose } from 'react-icons/cg'; 
 import { FiSun, FiMoon } from 'react-icons/fi';
 
-const Navbar = ({ theme, setTheme }) => {
+const Navbar = ({ theme, setTheme, scrollProgress }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
-  const menuItems = ['About', 'Skills', 'Projects', 'Contact'];
+  const menuItems = ['About', 'Skills', 'Projects', 'Career', 'Contact'];
 
   const scrollToSection = (id) => {
-    const element = document.getElementById(id.toLowerCase());
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' });
     setIsOpen(false);
   };
 
@@ -32,32 +32,32 @@ const Navbar = ({ theme, setTheme }) => {
         >
           S<span className="text-primary">.</span>
         </motion.div>
+
         <div className="items-center hidden space-x-8 md:flex">
           {menuItems.map((item) => (
-            <a
-              key={item}
-              onClick={() => scrollToSection(item)}
-              className="relative cursor-pointer group"
-            >
+            <a key={item} onClick={() => scrollToSection(item)} className="relative cursor-pointer group">
               {item}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
             </a>
           ))}
+          <div className="w-16 font-mono text-right text-primary">{scrollProgress}%</div>
           <button onClick={toggleTheme} className="text-xl">
             {theme === 'dark' ? <FiSun /> : <FiMoon />}
           </button>
         </div>
+
         <div className="flex items-center md:hidden">
+          <span className="mr-4 font-mono text-primary">{scrollProgress}%</span>
           <button onClick={toggleTheme} className="mr-4 text-xl">
             {theme === 'dark' ? <FiSun /> : <FiMoon />}
           </button>
           <button onClick={() => setIsOpen(!isOpen)} className="z-50 text-2xl">
-            {isOpen ? <CgClose /> : <CgMenuRight />}
+        
+            {isOpen ? <CgClose /> : <CgMenuRight />} 
           </button>
         </div>
       </div>
 
-      
       <motion.div
         initial={{ x: '100%' }}
         animate={{ x: isOpen ? 0 : '100%' }}
@@ -66,11 +66,7 @@ const Navbar = ({ theme, setTheme }) => {
       >
         <div className="flex flex-col items-center justify-center h-full space-y-8 text-light dark:text-dark">
           {menuItems.map((item) => (
-            <a
-              key={item}
-              onClick={() => scrollToSection(item)}
-              className="text-2xl font-medium cursor-pointer"
-            >
+            <a key={item} onClick={() => scrollToSection(item)} className="text-2xl font-medium cursor-pointer">
               {item}
             </a>
           ))}

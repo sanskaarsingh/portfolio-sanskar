@@ -1,48 +1,84 @@
+
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { TypeAnimation } from 'react-type-animation';
 import heroBgImage from '../assets/hero-bg.jpg';
 
 const Hero = () => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+
+  const bgX = useTransform(mouseX, [-window.innerWidth / 2, window.innerWidth / 2], [25, -25]);
+  const bgY = useTransform(mouseY, [-window.innerHeight / 2, window.innerHeight / 2], [25, -25]);
+  const nameX = useTransform(mouseX, [-window.innerWidth / 2, window.innerWidth / 2], [-15, 15]);
+  const nameY = useTransform(mouseY, [-window.innerHeight / 2, window.innerHeight / 2], [-15, 15]);
+
+  const handleMouseMove = (e) => {
+    mouseX.set(e.clientX - window.innerWidth / 2);
+    mouseY.set(e.clientY - window.innerHeight / 2);
+  };
+
   return (
-    <section id="home" className="relative flex items-center justify-center h-screen overflow-hidden">
-      
-      <div className="absolute inset-0 z-0">
-        
-        <img 
-          src={heroBgImage} 
-          alt="Hero Background" 
-          className="object-cover w-full h-full opacity-30" 
-        />
-        \
-        <div className="absolute inset-0 bg-dark/30 dark:bg-dark/30" /> 
-      </div>
+    <section 
+      id="home" 
+      className="relative flex items-center justify-center h-screen overflow-hidden"
+      onMouseMove={handleMouseMove}
+    >
+    
+      <motion.div
+        className="absolute inset-[-50px] z-0"
+        style={{
+          backgroundImage: `url(${heroBgImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          x: bgX,
+          y: bgY,
+        }}
+      >
+        <div className="absolute inset-0 bg-dark/70" />
+      </motion.div>
+
 
       <div className="relative z-10 px-6 text-center text-light">
+        
         <motion.h1
+          style={{ x: nameX, y: nameY }}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="mb-4 text-4xl font-bold tracking-tight md:text-7xl"
+          className="mb-4 text-5xl font-bold tracking-tight md:text-7xl"
         >
           Sanskar Singh
         </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          className="text-base font-light md:text-2xl text-light/80"
+        
+   
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
         >
-          Full Stack Developer | Data Analyst | Backend & Data Systems
-        </motion.p>
+          <TypeAnimation
+            sequence={[
+              'Full Stack Developer', 2000,
+              'Data Analyst', 2000,
+              'Backend & Data Systems Engineer', 2000,
+            ]}
+            wrapper="p"
+            speed={50}
+            className="text-lg font-light md:text-2xl text-primary"
+            repeat={Infinity}
+          />
+        </motion.div>
       </div>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1, repeat: Infinity, repeatType: 'reverse' }}
-        className="absolute flex flex-col items-center -translate-x-1/2 bottom-10 left-1/2"
+        className="absolute z-20 flex flex-col items-center -translate-x-1/2 bottom-10 left-1/2"
       >
-        <span className="text-sm text-light/70">See More</span>
+        <span className="text-sm text-light/70">Scroll to Explore</span>
         <span className="mt-2 text-xl text-primary">↓</span>
       </motion.div>
     </section>
