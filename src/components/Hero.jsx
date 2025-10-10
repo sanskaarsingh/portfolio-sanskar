@@ -1,3 +1,4 @@
+// src/components/Hero.jsx
 
 import React from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
@@ -8,11 +9,16 @@ const Hero = () => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
+  // --- THIS IS WHERE THE FIX IS ---
+  // The output range (e.g., [10, -10]) controls the intensity. We'll make it smaller.
 
-  const bgX = useTransform(mouseX, [-window.innerWidth / 2, window.innerWidth / 2], [25, -25]);
-  const bgY = useTransform(mouseY, [-window.innerHeight / 2, window.innerHeight / 2], [25, -25]);
-  const nameX = useTransform(mouseX, [-window.innerWidth / 2, window.innerWidth / 2], [-15, 15]);
-  const nameY = useTransform(mouseY, [-window.innerHeight / 2, window.innerHeight / 2], [-15, 15]);
+  // Background movement is now more subtle
+  const bgX = useTransform(mouseX, [-window.innerWidth / 2, window.innerWidth / 2], [10, -10]);
+  const bgY = useTransform(mouseY, [-window.innerHeight / 2, window.innerHeight / 2], [10, -10]);
+
+  // Foreground (text) movement is even more subtle for a refined depth effect
+  const fgX = useTransform(mouseX, [-window.innerWidth / 2, window.innerWidth / 2], [-5, 5]);
+  const fgY = useTransform(mouseY, [-window.innerHeight / 2, window.innerHeight / 2], [-5, 5]);
 
   const handleMouseMove = (e) => {
     mouseX.set(e.clientX - window.innerWidth / 2);
@@ -25,7 +31,7 @@ const Hero = () => {
       className="relative flex items-center justify-center h-screen overflow-hidden"
       onMouseMove={handleMouseMove}
     >
-    
+      {/* Background with Parallax */}
       <motion.div
         className="absolute inset-[-50px] z-0"
         style={{
@@ -39,11 +45,10 @@ const Hero = () => {
         <div className="absolute inset-0 bg-dark/70" />
       </motion.div>
 
-
+      {/* Text Content Container */}
       <div className="relative z-10 px-6 text-center text-light">
-        
         <motion.h1
-          style={{ x: nameX, y: nameY }}
+          style={{ x: fgX, y: fgY }}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -52,7 +57,6 @@ const Hero = () => {
           Sanskar Singh
         </motion.h1>
         
-   
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -78,7 +82,7 @@ const Hero = () => {
         transition={{ duration: 1, delay: 1, repeat: Infinity, repeatType: 'reverse' }}
         className="absolute z-20 flex flex-col items-center -translate-x-1/2 bottom-10 left-1/2"
       >
-        <span className="text-sm text-light/70">Scroll to Explore</span>
+        <span className="text-sm text-light/70">SCROLL</span>
         <span className="mt-2 text-xl text-primary">↓</span>
       </motion.div>
     </section>

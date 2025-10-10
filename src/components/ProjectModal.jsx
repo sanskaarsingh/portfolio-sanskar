@@ -1,3 +1,5 @@
+// src/components/ProjectModal.jsx
+
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiGithub, FiExternalLink } from 'react-icons/fi';
@@ -5,17 +7,27 @@ import { FiX, FiGithub, FiExternalLink } from 'react-icons/fi';
 const ProjectModal = ({ project, onClose }) => {
   const modalRef = useRef(null);
 
- 
+  // This is the new, smarter useEffect hook that fixes the bug
   useEffect(() => {
     const modalElement = modalRef.current;
 
     if (modalElement) {
       const handleWheel = (e) => {
-      
+        // 1. Check if the modal's content is taller than its visible area
+        const isOverflowing = modalElement.scrollHeight > modalElement.clientHeight;
+
+        // 2. If the modal is NOT overflowing, we must prevent the default action
+        //    (which is scrolling the page behind it).
+        if (!isOverflowing) {
+          e.preventDefault();
+        }
+        
+        // 3. We always stop propagation to prevent conflicts with Lenis
         e.stopPropagation();
       };
 
-      modalElement.addEventListener('wheel', handleWheel);
+      // 4. We must add { passive: false } to allow preventDefault to work
+      modalElement.addEventListener('wheel', handleWheel, { passive: false });
 
       return () => {
         modalElement.removeEventListener('wheel', handleWheel);
@@ -40,7 +52,7 @@ const ProjectModal = ({ project, onClose }) => {
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-light dark:bg-dark border border-dark/10 dark:border-light/10 rounded-lg shadow-2xl"
+          className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-light dark:bg-dark border border-dark/10 dark:border-light/10 rounded-lg shadow-2xl custom-scrollbar"
           onClick={(e) => e.stopPropagation()} 
         >
           <button onClick={onClose} className="absolute z-10 text-2xl transition-colors top-4 right-4 hover:text-primary">

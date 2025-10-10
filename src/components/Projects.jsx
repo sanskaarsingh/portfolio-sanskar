@@ -1,3 +1,5 @@
+// src/components/Projects.jsx
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiEye } from 'react-icons/fi';
@@ -5,7 +7,7 @@ import { projects } from '../constants';
 import SectionHeader from './SectionHeader';
 import ProjectModal from './ProjectModal';
 
-const Projects = ({ lenis }) => {
+const Projects = ({ lenis, onModalClose }) => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
@@ -15,6 +17,12 @@ const Projects = ({ lenis }) => {
       if (lenis) lenis.start();
     }
   }, [selectedProject, lenis]);
+
+  // New handler to close the modal AND reset the cursor
+  const handleClose = () => {
+    setSelectedProject(null);
+    onModalClose();
+  };
 
   return (
     <>
@@ -28,7 +36,6 @@ const Projects = ({ lenis }) => {
                 className="overflow-hidden border rounded-lg shadow-md cursor-pointer group bg-light dark:bg-dark border-dark/10 dark:border-light/10"
                 onClick={() => setSelectedProject(project)}
               >
- 
                 <div className="relative bg-light dark:bg-dark">
                   <img 
                     src={project.image} 
@@ -49,7 +56,7 @@ const Projects = ({ lenis }) => {
         </div>
       </section>
 
-      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <ProjectModal project={selectedProject} onClose={handleClose} />
     </>
   );
 };

@@ -3,8 +3,10 @@ import {
 } from 'react-icons/fa';
 import {
   SiJavascript, SiPostgresql, SiMongodb, SiRedis, SiExpress, SiDjango, SiFlask, SiCplusplus,
-  SiGooglecloud, SiVisualstudiocode, SiJupyter, SiPostman, SiTailwindcss, SiFramer
+  SiGooglecloud, SiVisualstudiocode, SiJupyter, SiPostman, SiTailwindcss
 } from 'react-icons/si';
+// 1. We'll use FiZap for Framer Motion
+import { FiZap } from 'react-icons/fi'; 
 
 
 import sosGameImg from '../assets/images/sos-game.jpg';
@@ -15,20 +17,20 @@ import currencyTrackerImg from '../assets/images/currency-tracker.jpg';
 import ballStatsImg from '../assets/images/ball-stats.jpg';
 
 export const categorizedSkills = {
-  "Languages": [
+  "Programming Languages": [
     { name: 'Python', icon: FaPython, color: '#f4ac45' },
     { name: 'Java', icon: FaJava, color: '#f24333' },
     { name: 'C++', icon: SiCplusplus, color: '#07beb8' },
-    { name: 'JavaScript', icon: SiJavascript, color: '#f4ac45' },
+    { name: 'JavaScript (ES6)', icon: SiJavascript, color: '#f4ac45' },
   ],
-  "Frontend": [
+  "Frontend Technologies": [
     { name: 'React.js', icon: FaReact, color: '#07beb8' },
     { name: 'HTML5', icon: FaHtml5, color: '#f24333' },
     { name: 'CSS3', icon: FaCss3Alt, color: '#07beb8' },
     { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#07beb8' },
-    { name: 'Framer Motion', icon: SiFramer, color: '#fefffe' },
+    { name: 'Framer Motion', icon: FiZap, color: '#d946ef' },
   ],
-  "Backend": [
+  "Backend Development": [
     { name: 'Node.js', icon: FaNodeJs, color: '#07beb8' },
     { name: 'Express.js', icon: SiExpress, color: '#fefffe' },
     { name: 'Django', icon: SiDjango, color: '#07beb8' },
@@ -43,7 +45,6 @@ export const categorizedSkills = {
     { name: 'VS Code', icon: SiVisualstudiocode, color: '#07beb8' },
   ],
 };
-
 export const projects = [
   {
     title: 'SOS Multiplayer Game',
