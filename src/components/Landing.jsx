@@ -1,5 +1,3 @@
-// src/components/Landing.jsx
-
 import React, { useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -11,10 +9,10 @@ const Landing = () => {
     let animationFrameId;
     let scene, camera, renderer, stars, geometry, material;
     
-    // Storing the current ref in a variable for the cleanup function
+
     const currentMount = mountRef.current;
 
-    // --- Animation Setup (unchanged) ---
+    
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
     camera.position.z = 1;
@@ -47,18 +45,18 @@ const Landing = () => {
     };
     window.addEventListener('resize', onWindowResize);
 
-    // --- THIS IS THE CORRECTED CLEANUP FUNCTION ---
+
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('resize', onWindowResize);
       
-      // Check if the renderer's DOM element is still a child before removing it
+
       if (currentMount && currentMount.contains(renderer.domElement)) {
         currentMount.removeChild(renderer.domElement);
       }
 
-      // Dispose of Three.js objects to free up GPU memory
+
       geometry.dispose();
       material.dispose();
       scene.remove(stars);

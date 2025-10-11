@@ -1,11 +1,9 @@
-// src/components/Skills.jsx
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { categorizedSkills } from '../constants';
 import SectionHeader from './SectionHeader';
 
-// --- Mobile-Friendly Skill List Component ---
+
 const MobileSkillsList = () => (
   <div className="space-y-10">
     {Object.entries(categorizedSkills).map(([category, skills]) => (
@@ -31,7 +29,7 @@ const MobileSkillsList = () => (
   </div>
 );
 
-// --- Desktop Tech Radar Component ---
+
 const DesktopTechRadar = () => {
   const [hoveredSkill, setHoveredSkill] = useState(null);
   const [containerSize, setContainerSize] = useState(800);
@@ -57,7 +55,7 @@ const DesktopTechRadar = () => {
             <div key={`ring-${index}`} className="absolute border rounded-full border-dark/10 dark:border-primary/20" style={{ width: radius * 2, height: radius * 2 }} />
         ))}
         <div className="absolute z-10 flex flex-col items-center justify-center w-48 h-48 text-center border-2 rounded-full border-dark/10 dark:border-primary/30 bg-dark/5 dark:bg-primary/5">
-            {/* Made this transition faster to match the hover speed */}
+            
             <AnimatePresence mode="wait">
               {hoveredSkill ? (
                 <motion.div key={hoveredSkill.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="flex flex-col items-center">
@@ -89,7 +87,7 @@ const DesktopTechRadar = () => {
                   initial={{ x: '-50%', y: '-50%', scale: 0 }}
                   animate={{ scale: 1, x: `calc(-50% + ${x}px)`, y: `calc(-50% + ${y}px)` }}
                   transition={{ duration: 1.5, delay: 0.5 + categoryIndex * 0.2 + skillIndex * 0.05, ease: "circOut" }}
-                  // THIS IS THE FIX: Added a fast, custom transition for the hover effect
+                  
                   whileHover={{ 
                     scale: 1.8, 
                     zIndex: 50,
@@ -107,7 +105,7 @@ const DesktopTechRadar = () => {
   );
 };
 
-// --- Main Skills Component with Adaptive Logic ---
+
 const Skills = () => {
   const [isMobile, setIsMobile] = useState(false);
 

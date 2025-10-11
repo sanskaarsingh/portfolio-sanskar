@@ -1,5 +1,3 @@
-// src/components/ProjectModal.jsx
-
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiGithub, FiExternalLink } from 'react-icons/fi';
@@ -11,21 +9,21 @@ const ProjectModal = ({ project, onClose }) => {
     const modalElement = modalRef.current;
 
     if (modalElement) {
-      // This stops the scroll wheel event from bubbling up to the main page
+
       const handleWheel = (e) => {
         e.stopPropagation();
       };
       
-      // THIS IS THE FIX: We do the same for touch swipe events
+    
       const handleTouchMove = (e) => {
         e.stopPropagation();
       };
 
-      // Add the listeners
+
       modalElement.addEventListener('wheel', handleWheel);
       modalElement.addEventListener('touchmove', handleTouchMove);
 
-      // Cleanup function to remove both listeners
+ 
       return () => {
         modalElement.removeEventListener('wheel', handleWheel);
         modalElement.removeEventListener('touchmove', handleTouchMove);

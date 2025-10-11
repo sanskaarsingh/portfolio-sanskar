@@ -1,4 +1,4 @@
-// src/components/Experience.jsx
+
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -6,13 +6,13 @@ import { experiences, education } from '../constants';
 import SectionHeader from './SectionHeader';
 import { FiBriefcase, FiAward } from 'react-icons/fi';
 
-// --- Combined Data ---
+
 const timelineItems = [
   ...experiences.map(item => ({ ...item, type: 'work' })),
   ...education.map(item => ({ ...item, type: 'education' }))
 ];
 
-// --- Component for the Desktop (PC) Alternating Timeline ---
+
 const DesktopTimeline = () => (
   <div className="relative h-full p-10 overflow-hidden wrap">
     <div className="absolute h-full border border-2-2 border-primary/30" style={{ left: '50%' }}></div>
@@ -29,7 +29,7 @@ const DesktopTimeline = () => (
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          // THIS IS THE LINE THAT WAS FIXED: Added hover glow effect
+      
           className="order-1 w-5/12 px-6 py-4 transition-shadow duration-300 border rounded-lg shadow-xl bg-light dark:bg-dark border-dark/10 dark:border-light/10 hover:shadow-lg hover:shadow-primary/20"
         >
           <p className="mb-1 text-sm font-semibold text-primary">{item.date}</p>
@@ -42,7 +42,7 @@ const DesktopTimeline = () => (
   </div>
 );
 
-// --- Component for the Mobile Single-Column Timeline ---
+
 const MobileTimeline = () => (
   <div className="relative max-w-3xl mx-auto mt-12">
     <div className="absolute top-0 h-full w-0.5 bg-primary/30 left-5" />
@@ -71,7 +71,7 @@ const MobileTimeline = () => (
   </div>
 );
 
-// --- Main Experience Component with Adaptive Logic ---
+
 const Experience = () => {
   const [isMobile, setIsMobile] = useState(false);
 

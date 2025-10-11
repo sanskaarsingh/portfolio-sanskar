@@ -1,14 +1,11 @@
-// src/components/Cursor.jsx
-
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { motion } from 'framer-motion';
 
-// We need to wrap the component in forwardRef to expose its functions
+
 const Cursor = forwardRef((props, ref) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
-  // This function allows parent components to reset the hover state
   useImperativeHandle(ref, () => ({
     resetHover() {
       setIsHovering(false);

@@ -51,18 +51,18 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent; /* Make the track invisible */
+  background: transparent; 
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #07beb8; /* Your primary color */
+  background-color: #07beb8; 
   border-radius: 10px;
-  border: 2px hidden #2d2a32; /* Match the modal's dark background */
+  border: 2px hidden #2d2a32; 
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #7beb8; /* White on hover */
-  border-color: #1f1d24; /* A slightly lighter dark on hover */
+  background-color: #7beb8; 
+  border-color: #1f1d24; 
 }
 .animate-slow-pan {
   animation: slow-pan 25s ease infinite;

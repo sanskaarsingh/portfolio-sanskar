@@ -1,5 +1,3 @@
-// src/components/Projects.jsx
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiEye } from 'react-icons/fi';
@@ -18,7 +16,7 @@ const Projects = ({ lenis, onModalClose }) => {
     }
   }, [selectedProject, lenis]);
 
-  // New handler to close the modal AND reset the cursor
+  
   const handleClose = () => {
     setSelectedProject(null);
     onModalClose();

@@ -5,7 +5,7 @@ import {
   SiJavascript, SiPostgresql, SiMongodb, SiRedis, SiExpress, SiDjango, SiFlask, SiCplusplus,
   SiGooglecloud, SiVisualstudiocode, SiJupyter, SiPostman, SiTailwindcss
 } from 'react-icons/si';
-// 1. We'll use FiZap for Framer Motion
+
 import { FiZap } from 'react-icons/fi'; 
 
 
