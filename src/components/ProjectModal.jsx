@@ -7,30 +7,28 @@ import { FiX, FiGithub, FiExternalLink } from 'react-icons/fi';
 const ProjectModal = ({ project, onClose }) => {
   const modalRef = useRef(null);
 
-  // This is the new, smarter useEffect hook that fixes the bug
   useEffect(() => {
     const modalElement = modalRef.current;
 
     if (modalElement) {
+      // This stops the scroll wheel event from bubbling up to the main page
       const handleWheel = (e) => {
-        // 1. Check if the modal's content is taller than its visible area
-        const isOverflowing = modalElement.scrollHeight > modalElement.clientHeight;
-
-        // 2. If the modal is NOT overflowing, we must prevent the default action
-        //    (which is scrolling the page behind it).
-        if (!isOverflowing) {
-          e.preventDefault();
-        }
-        
-        // 3. We always stop propagation to prevent conflicts with Lenis
+        e.stopPropagation();
+      };
+      
+      // THIS IS THE FIX: We do the same for touch swipe events
+      const handleTouchMove = (e) => {
         e.stopPropagation();
       };
 
-      // 4. We must add { passive: false } to allow preventDefault to work
-      modalElement.addEventListener('wheel', handleWheel, { passive: false });
+      // Add the listeners
+      modalElement.addEventListener('wheel', handleWheel);
+      modalElement.addEventListener('touchmove', handleTouchMove);
 
+      // Cleanup function to remove both listeners
       return () => {
         modalElement.removeEventListener('wheel', handleWheel);
+        modalElement.removeEventListener('touchmove', handleTouchMove);
       };
     }
   }, [project]);

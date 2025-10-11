@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
 
-// Import all components
+// Import all components (ScrollProgressBar is now removed)
 import Landing from './components/Landing';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -15,19 +15,15 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Cursor from './components/Cursor';
-import ScrollProgressBar from './components/ScrollProgressBar';
 
-// Using the MainSite component structure you provided
-const MainSite = ({ theme, setTheme, lenis, onModalClose, scrollProgress, setScrollProgress }) => (
+const MainSite = ({ theme, setTheme, lenis, onModalClose, scrollProgress }) => (
   <motion.div
     key="main-site"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    transition={{ duration: 1.5, ease: [0.87, 0, 0.13, 1] }}
+    transition={{ duration: 1, ease: 'easeInOut' }}
   >
-    {/* The ScrollProgressBar now correctly lives inside the main site */}
-    <ScrollProgressBar setProgress={setScrollProgress} />
     <Navbar theme={theme} setTheme={setTheme} scrollProgress={scrollProgress} />
     <main>
       <Hero />
@@ -45,17 +41,25 @@ function App() {
   const [theme, setTheme] = useState('dark');
   const [showLanding, setShowLanding] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const lenisRef = useRef(null);
   const cursorRef = useRef(null);
   const isTransitioning = useRef(false);
 
-  // Theme logic
+  // Touch device detection
+  useEffect(() => {
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      setIsTouchDevice(true);
+    }
+  }, []);
+
+  // Theme management
   useEffect(() => {
     const root = window.document.documentElement;
     if (theme === 'dark') { root.classList.add('dark'); } else { root.classList.remove('dark'); }
   }, [theme]);
 
-  // Lenis initialization with smooth scroll tuning
+  // Lenis initialization
   useEffect(() => {
     const lenisInstance = new Lenis({ lerp: 0.08, wheelMultiplier: 0.9 });
     lenisRef.current = lenisInstance;
@@ -64,44 +68,41 @@ function App() {
     return () => lenisInstance.destroy();
   }, []);
 
-  // Combined scroll and touch transition logic
+  // THIS IS THE DEFINITIVE FIX: Manual scroll progress calculation
   useEffect(() => {
     const lenis = lenisRef.current;
     if (!lenis) return;
 
+    // This function will be called on every scroll event from Lenis
+    const updateProgress = (e) => {
+      const progress = Math.round(e.progress * 100);
+      setScrollProgress(progress);
+    };
+
+    // When we enter the main site...
+    if (!showLanding) {
+      // Wait a moment for the page to render, then attach the listener
+      const timer = setTimeout(() => {
+        lenis.on('scroll', updateProgress);
+      }, 100);
+      return () => {
+        clearTimeout(timer);
+        lenis.off('scroll', updateProgress); // Clean up the listener
+      };
+    }
+  }, [showLanding]);
+
+  // Event listeners for transitions (no changes here)
+  useEffect(() => {
+    const lenis = lenisRef.current;
+    if (!lenis) return;
     let touchStartY = 0;
-
-    const handleEnter = () => {
-      if (isTransitioning.current) return;
-      isTransitioning.current = true;
-      setShowLanding(false);
-      // Definitive fix for the scroll percentage bug
-      if (lenis) lenis.scrollTo(0, { immediate: true });
-      setScrollProgress(0);
-      setTimeout(() => { isTransitioning.current = false; }, 1600);
-    };
-
-    const handleExit = () => {
-      if (isTransitioning.current) return;
-      isTransitioning.current = true;
-      setShowLanding(true);
-      setTimeout(() => { isTransitioning.current = false; }, 1600);
-    };
-    
-    const handleWheel = (event) => {
-      if (showLanding && event.deltaY > 0) handleEnter();
-      if (!showLanding && window.scrollY === 0 && event.deltaY < 0) handleExit();
-    };
-
+    const handleEnter = () => { if (!isTransitioning.current) { isTransitioning.current = true; setShowLanding(false); setTimeout(() => { isTransitioning.current = false; }, 1200); }};
+    const handleExit = () => { if (!isTransitioning.current) { isTransitioning.current = true; setShowLanding(true); setTimeout(() => { isTransitioning.current = false; }, 1200); }};
+    const handleWheel = (event) => { if (showLanding && event.deltaY > 0) handleEnter(); if (!showLanding && window.scrollY === 0 && event.deltaY < 0) handleExit(); };
     const handleTouchStart = (event) => { touchStartY = event.touches[0].clientY; };
-    const handleTouchMove = (event) => {
-      const deltaY = touchStartY - event.touches[0].clientY;
-      if (showLanding && deltaY > 30) handleEnter();
-      if (!showLanding && window.scrollY === 0 && deltaY < -30) handleExit();
-    };
-
+    const handleTouchMove = (event) => { const deltaY = touchStartY - event.touches[0].clientY; if (showLanding && deltaY > 30) handleEnter(); if (!showLanding && window.scrollY === 0 && deltaY < -30) handleExit(); };
     if (showLanding) { lenis.stop(); } else { lenis.start(); }
-
     window.addEventListener('wheel', handleWheel);
     window.addEventListener('touchstart', handleTouchStart);
     window.addEventListener('touchmove', handleTouchMove);
@@ -112,7 +113,6 @@ function App() {
     };
   }, [showLanding]);
 
-  // Cursor reset logic
   const handleModalClose = () => {
     if (cursorRef.current) {
       cursorRef.current.resetHover();
@@ -121,7 +121,9 @@ function App() {
 
   return (
     <>
-      <Cursor ref={cursorRef} />
+      {!isTouchDevice && <Cursor ref={cursorRef} />}
+      {/* ScrollProgressBar component is now gone */}
+      
       <div className="App">
         <AnimatePresence mode="wait">
           {showLanding ? (
@@ -133,7 +135,6 @@ function App() {
               setTheme={setTheme} 
               lenis={lenisRef.current}
               scrollProgress={scrollProgress}
-              setScrollProgress={setScrollProgress}
               onModalClose={handleModalClose}
             />
           )}

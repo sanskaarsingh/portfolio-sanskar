@@ -36,7 +36,6 @@ const DesktopTechRadar = () => {
   const [hoveredSkill, setHoveredSkill] = useState(null);
   const [containerSize, setContainerSize] = useState(800);
 
-  // Dynamically calculate radii based on container size
   const radii = useMemo(() => {
     const baseRadius = containerSize / 2;
     return [baseRadius * 0.3, baseRadius * 0.5, baseRadius * 0.7, baseRadius * 0.9];
@@ -54,20 +53,20 @@ const DesktopTechRadar = () => {
 
   return (
     <div className="relative flex items-center justify-center w-full" style={{ height: `${containerSize}px` }}>
-        {/* Rings and Core */}
         {radii.map((radius, index) => (
             <div key={`ring-${index}`} className="absolute border rounded-full border-dark/10 dark:border-primary/20" style={{ width: radius * 2, height: radius * 2 }} />
         ))}
         <div className="absolute z-10 flex flex-col items-center justify-center w-48 h-48 text-center border-2 rounded-full border-dark/10 dark:border-primary/30 bg-dark/5 dark:bg-primary/5">
+            {/* Made this transition faster to match the hover speed */}
             <AnimatePresence mode="wait">
               {hoveredSkill ? (
-                <motion.div key={hoveredSkill.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center">
+                <motion.div key={hoveredSkill.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="flex flex-col items-center">
                   <div className="text-5xl" style={{ color: hoveredSkill.color }}><hoveredSkill.icon /></div>
                   <p className="mt-2 font-semibold text-dark dark:text-light">{hoveredSkill.name}</p>
                   <p className="text-xs text-primary/70">{hoveredSkill.category}</p>
                 </motion.div>
               ) : (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="text-center">
                   <p className="font-bold text-primary">TECH RADAR</p>
                   <p className="text-xs text-dark/60 dark:text-light/60">Hover a skill</p>
                 </motion.div>
@@ -75,7 +74,6 @@ const DesktopTechRadar = () => {
             </AnimatePresence>
         </div>
 
-        {/* Orbiting Dots */}
         {Object.entries(categorizedSkills).map(([category, skills], categoryIndex) => {
             const currentRadius = radii[categoryIndex];
             if (!currentRadius) return null;
@@ -91,7 +89,12 @@ const DesktopTechRadar = () => {
                   initial={{ x: '-50%', y: '-50%', scale: 0 }}
                   animate={{ scale: 1, x: `calc(-50% + ${x}px)`, y: `calc(-50% + ${y}px)` }}
                   transition={{ duration: 1.5, delay: 0.5 + categoryIndex * 0.2 + skillIndex * 0.05, ease: "circOut" }}
-                  whileHover={{ scale: 1.8, zIndex: 50 }}
+                  // THIS IS THE FIX: Added a fast, custom transition for the hover effect
+                  whileHover={{ 
+                    scale: 1.8, 
+                    zIndex: 50,
+                    transition: { duration: 0.2, ease: "easeOut" } 
+                  }}
                   onHoverStart={() => setHoveredSkill({ ...skill, category })}
                   onHoverEnd={() => setHoveredSkill(null)}
                 >
@@ -104,14 +107,13 @@ const DesktopTechRadar = () => {
   );
 };
 
-
 // --- Main Skills Component with Adaptive Logic ---
 const Skills = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 768px is the 'md' breakpoint
+      setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -121,7 +123,7 @@ const Skills = () => {
   return (
     <section id="skills" className="py-24 bg-dark/5 dark:bg-light/5">
       <div className="container px-6 mx-auto">
-        <SectionHeader title="Tech Stack" />
+        <SectionHeader title="My Tech Stack" />
         {isMobile ? <MobileSkillsList /> : <DesktopTechRadar />}
       </div>
     </section>
