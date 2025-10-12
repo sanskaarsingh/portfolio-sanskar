@@ -117,25 +117,25 @@ export const experiences = [
   {
     role: 'Software Engineer',
     company: 'Bhawani Transport',
-    date: 'May 2024 - Present',
+    date: 'May 2024 - August 2025',
     description: 'Developing and maintaining backend systems and data pipelines for logistics and fleet management.',
   },
   {
     role: 'Frontend Developer Intern',
     company: 'Lakhdataar Udyog',
-    date: 'Dec 2023 - Apr 2024',
+    date: 'December 2023 - April 2024',
     description: 'Built responsive user interfaces using React and contributed to a large-scale e-commerce web application, improving user engagement metrics.',
   },
   {
     role: 'Data Analyst Intern',
     company: 'Ready Wheels',
-    date: 'Mar 2023 - May 2023',
+    date: 'March 2023 - May 2023',
     description: 'Built Python scripts to process and analyze IoT sensor data from vehicles. Created fleet performance monitoring modules that were integrated into the main dashboard.',
   },
   {
     role: 'Data Associate Intern',
     company: 'Black Diamond Motors',
-    date: 'Mar 2022 - May 2022',
+    date: 'March 2022 - May 2022',
     description: 'Automated dispatch & fuel tracking dashboards using SQL and Power BI, which reduced manual reporting work by over 80%.',
   },
 ];
