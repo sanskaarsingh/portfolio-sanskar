@@ -115,13 +115,13 @@ export const projects = [
 
 export const experiences = [
   {
-    role: 'Software Engineer',
+    role: 'Data/Backend Software Engineer',
     company: 'Bhawani Transport',
     date: 'May 2024 - August 2025',
     description: 'Developing and maintaining backend systems and data pipelines for logistics and fleet management.',
   },
   {
-    role: 'Frontend Developer Intern',
+    role: 'Frontend Intern',
     company: 'Lakhdataar Udyog',
     date: 'December 2023 - April 2024',
     description: 'Built responsive user interfaces using React and contributed to a large-scale e-commerce web application, improving user engagement metrics.',
